@@ -36,7 +36,7 @@ class LoanStatusNotice extends Notification implements ShouldQueue
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject('Loan Status Update - Uganda Procurement Practitioners SACCO')
+            ->subject('Loan Status Update - SaccoMax')
             ->view('emails.LoanStatusNotice', ['details' => $this->details]);
     }
 

@@ -36,7 +36,7 @@ class WithdrawalsNotification extends Notification implements ShouldQueue
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject('Withdrawal Confirmation - Uganda Procurement Practitioners SACCO')
+            ->subject('Withdrawal Confirmation - SaccoMax')
             ->view('emails.WithdrawalConfirmation', ['details' => $this->details]);
     }
 

@@ -37,7 +37,7 @@ class GuarantorActionNotice extends Notification implements ShouldQueue
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject('Loan Guarantee Status - Uganda Procurement Practitioners SACCO')
+            ->subject('Loan Guarantee Status - SaccoMax')
             ->view('emails.GuarantorActionNotice', ['details' => $this->details]);
     }
 

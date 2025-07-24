@@ -36,7 +36,7 @@ class LoginEmailNotice extends Notification implements ShouldQueue
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject('Uganda Procurement Practitioners SACCO - Account Creation')
+            ->subject('SaccoMax - Account Creation')
             ->view('emails.AccountCreation', ['details' => $this->details]);
     }
 

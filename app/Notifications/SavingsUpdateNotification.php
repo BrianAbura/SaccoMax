@@ -36,7 +36,7 @@ class SavingsUpdateNotification extends Notification implements ShouldQueue
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-        ->subject('Savings Update Notification - Uganda Procurement Practitioners SACCO')
+        ->subject('Savings Update Notification - SaccoMax')
         ->view('emails.SavingsConfirmation', ['details' => $this->details]);
     }
 
