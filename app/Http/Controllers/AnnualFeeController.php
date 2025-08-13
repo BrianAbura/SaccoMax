@@ -6,6 +6,7 @@ use App\Models\AnnualFee;
 use App\Models\Category;
 use App\Models\Incomes;
 use App\Models\User;
+use App\Notifications\AnnualFeeNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -89,6 +90,16 @@ class AnnualFeeController extends Controller
 
         logAudit('Added Annual Fee', 'annual_fees', $annualfee->id, [], $annualfee->toArray());
 
+        // Annual Fee Send Notification
+        $details = [
+            'fullname' => $member->first_name . ' ' . $member->last_name,
+            'annual_fee_amount' => number_format($annualfee->amount),
+            'fee_year' => $annualfee->year,
+            'updated' => false
+        ];
+
+        $member->notify(new AnnualFeeNotification($details));
+
         return redirect()->route('annual-fees.index')->with('success', $member->first_name . " " . $member->last_name . "'s annual fee for " . $request->fee_year . " has been added successfully");
     }
 
@@ -148,6 +159,18 @@ class AnnualFeeController extends Controller
         $annualfee->save();
 
         logAudit('Updated Annual Fee', 'annual_fees', $annualfee->id, $old_annualfee, $annualfee->toArray());
+
+        // Annual Fee Send Notification
+        $details = [
+            'fullname' => $annualfee->member->first_name . ' ' . $annualfee->member->last_name,
+            'annual_fee_amount' => number_format($annualfee->amount),
+            'old_annual_fee_amount' => number_format($old_annualfee['amount']),
+            'fee_year' => $annualfee->year,
+            'updated' => true,
+
+        ];
+
+        $annualfee->member->notify(new AnnualFeeNotification($details));
 
         // Update Incomes
         $income = Incomes::where('source_id', $annualfee->id)->where('source_type', 'Annual Fee')->first();

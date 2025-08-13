@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Incomes;
 use App\Models\MembershipFee;
 use App\Models\User;
+use App\Notifications\MembershipFeeNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -87,6 +88,15 @@ class MembershipFeeController extends Controller
 
         logAudit('Added Membership Fee', 'membership_fees', $membershipfee->id, [], $membershipfee->toArray());
 
+        // Membership Fee Send Notification
+        $details = [
+            'fullname' => $member->first_name . ' ' . $member->last_name,
+            'membership_fee_amount' => number_format($membershipfee->amount),
+            'updated' => false
+        ];
+
+        $member->notify(new MembershipFeeNotification($details));
+
         return redirect()->route('fees-membership.index')->with('success', $member->first_name . " " . $member->last_name . "'s membership fee has been added successfully");
     }
 
@@ -144,6 +154,16 @@ class MembershipFeeController extends Controller
         $membershipfee->save();
 
         logAudit('Updated Membership Fee', 'membership_fees', $membershipfee->id, $old_membershipfee, $membershipfee->toArray());
+
+        // Membership Fee Send Notification
+        $details = [
+            'fullname' => $membershipfee->member->first_name . ' ' . $membershipfee->member->last_name,
+            'membership_fee_amount' => number_format($membershipfee->amount),
+            'updated' => true,
+            'old_membership_fee_amount' => number_format($old_membershipfee['amount'])
+        ];
+
+        $membershipfee->member->notify(new MembershipFeeNotification($details));
 
         // Update Incomes
         $income = Incomes::where('source_id', $membershipfee->id)->where('source_type', 'Membership Fee')->first();
