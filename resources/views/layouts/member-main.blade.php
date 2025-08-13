@@ -198,7 +198,7 @@
                                             d="M1 0a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h4.083q.088-.517.258-1H3a2 2 0 0 0-2-2V3a2 2 0 0 0 2-2h10a2 2 0 0 0 2 2v3.528c.38.34.717.728 1 1.154V1a1 1 0 0 0-1-1z" />
                                         <path d="M9.998 5.083 10 5a2 2 0 1 0-3.132 1.65 6 6 0 0 1 3.13-1.567" />
                                     </svg>
-                                    <span>My Savings </span></a>
+                                    <span>Savings </span></a>
                             </li>
 
                             <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav"
@@ -213,8 +213,18 @@
                                             d="M1 0a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h4.083q.088-.517.258-1H3a2 2 0 0 0-2-2V3a2 2 0 0 0 2-2h10a2 2 0 0 0 2 2v3.528c.38.34.717.728 1 1.154V1a1 1 0 0 0-1-1z" />
                                         <path d="M9.998 5.083 10 5a2 2 0 1 0-3.132 1.65 6 6 0 0 1 3.13-1.567" />
                                     </svg>
-                                    <span>My Withdrawals </span></a>
+                                    <span>Withdrawals </span></a>
                             </li>
+
+                            <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav"
+                                href="{{ route('member.shares') }}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                fill="currentColor" class="bi bi-bar-chart-line" viewBox="0 0 16 16">
+                                <path
+                                    d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1zm1 12h2V2h-2zm-3 0V7H7v7zm-5 0v-3H2v3z" />
+                            </svg>
+                                <span>Shares </span></a>
+                        </li>
 
 
                             <li class="sidebar-list"><a class="sidebar-link sidebar-title">
@@ -223,7 +233,7 @@
                                         <path
                                             d="m8 0 6.61 3h.89a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5H15v7a.5.5 0 0 1 .485.38l.5 2a.498.498 0 0 1-.485.62H.5a.498.498 0 0 1-.485-.62l.5-2A.5.5 0 0 1 1 13V6H.5a.5.5 0 0 1-.5-.5v-2A.5.5 0 0 1 .5 3h.89zM3.777 3h8.447L8 1zM2 6v7h1V6zm2 0v7h2.5V6zm3.5 0v7h1V6zm2 0v7H12V6zM13 6v7h1V6zm2-1V4H1v1zm-.39 9H1.39l-.25 1h13.72z" />
                                     </svg>
-                                    <span>My Loans</span></a>
+                                    <span>Loans</span></a>
                                 <ul class="sidebar-submenu">
                                     <li><a href="{{ route('member.loan_requests') }}">Loan Requests</a></li>
                                     <li><a href="{{ route('member.loan-payments') }}">Loan Payments</a></li>

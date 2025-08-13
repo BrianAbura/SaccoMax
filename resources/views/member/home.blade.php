@@ -66,7 +66,7 @@
                                         class="f-light f-w-500 f-14">Withdrawals</span>
                                     <div class="project-details">
                                         <div class="project-counter">
-                                            <h2 class="f-w-600">{{ number_format($total_withdrawals) }}</h2>
+                                            <h2 class="f-w-600">UGX {{ number_format($total_withdrawals) }}</h2>
                                         </div>
                                         <div class="product-sub bg-primary-light">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
@@ -201,6 +201,40 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-xl-4 col-sm-6">
+                            <div class="card o-hidden small-widget">
+                                <div class="card-body total-Complete border-b-success border-2"><span
+                                        class="f-light f-w-500 f-14">Shareholding Value
+                                    </span>
+                                    <div class="project-details">
+                                        <div class="project-counter">
+                                            <h2 class="f-w-600">UGX {{ number_format($total_shares->total_share_value) }}
+                                            </h2>
+                                        </div>
+                                        <div class="product-sub bg-success-light">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+                                                fill="currentColor" class="bi bi-bar-chart-line" viewBox="0 0 16 16">
+                                                <path
+                                                    d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1zm1 12h2V2h-2zm-3 0V7H7v7zm-5 0v-3H2v3z" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    <ul class="bubbles">
+                                        <li class="bubble"> </li>
+                                        <li class="bubble"></li>
+                                        <li class="bubble"></li>
+                                        <li class="bubble"> </li>
+                                        <li class="bubble"></li>
+                                        <li class="bubble"> </li>
+                                        <li class="bubble"></li>
+                                        <li class="bubble"></li>
+                                        <li class="bubble"> </li>
+                                    </ul>
+                                    <span class="f-12 f-w-600">{{ number_format($total_shares->total_number_of_shares) }}
+                                        shares purchased</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 {{-- Third Row --}}
@@ -210,14 +244,16 @@
                             <div class="col-xl-4 col-sm-6">
                                 <div class="card height-equal">
                                     <div class="card-header pb-0 total-revenue card-no-border">
-                                        <h5 class="txt-info">Guarantor Requests </h5><a href="{{ route('member.guarantor-requests') }}">View
+                                        <h5 class="txt-info">Guarantor Requests </h5><a
+                                            href="{{ route('member.guarantor-requests') }}">View
                                             All</a>
                                     </div>
                                     <div class="card-body">
                                         <ul>
                                             @foreach ($guarantor_requests as $request)
                                                 <li class="sale-history-card">
-                                                    <div class="history-price"><a class="f-w-500 f-14  mb-0 txt-success" href="{{ route('member.guarantor-requests') }}">
+                                                    <div class="history-price"><a class="f-w-500 f-14  mb-0 txt-success"
+                                                            href="{{ route('member.guarantor-requests') }}">
                                                             {{ $request->loanRequest->member->first_name }}
                                                             {{ $request->loanRequest->member->last_name }}</a><span
                                                             class="mb-0 txt-primary f-w-600 f-14">UGX

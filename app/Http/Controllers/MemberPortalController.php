@@ -11,6 +11,7 @@ use App\Models\LoanRequest;
 use App\Models\User;
 use App\Models\Withdrawals;
 use App\Models\Guarantor;
+use App\Models\Shares;
 use App\Notifications\GuarantorActionNotice;
 use App\Notifications\GuarantorRequestNotice;
 use Illuminate\Support\Facades\Auth;
@@ -20,14 +21,26 @@ class MemberPortalController extends Controller
 {
     public function savings()
     {
-        $savings = Savings::where('user_id', Auth::user()->id)->get();
+        $savings = Savings::where('user_id', Auth::user()->id)
+            ->orderby('created_at', 'desc')
+            ->get();
         return view('member.savings', compact('savings'));
     }
 
     public function withdrawals()
     {
-        $withdrawals = Withdrawals::where('user_id', Auth::user()->id)->get();
+        $withdrawals = Withdrawals::where('user_id', Auth::user()->id)
+            ->orderby('created_at', 'desc')
+            ->get();
         return view('member.withdrawals', compact('withdrawals'));
+    }
+
+    public function shares()
+    {
+        $shares = Shares::where('user_id', Auth::user()->id)
+            ->orderby('created_at', 'desc')
+            ->get();
+        return view('member.shares', compact('shares'));
     }
 
     private function recordLoanHistory($loanRequestId, $transactionType, $comment = null)
@@ -212,9 +225,9 @@ class MemberPortalController extends Controller
             'loanRequest.member',
             'loanRequest.loanProduct'
         ])
-        ->where('guarantor_id', Auth::id())
-        ->orderBy('created_at', 'desc')
-        ->get();
+            ->where('guarantor_id', Auth::id())
+            ->orderBy('created_at', 'desc')
+            ->get();
 
         return view('member.guarantor-requests', compact('guarantor_requests'));
     }

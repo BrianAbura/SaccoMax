@@ -6,6 +6,7 @@ use App\Models\LoanPayment;
 use App\Models\LoanRequest;
 use App\Models\NextOfKin;
 use App\Models\Savings;
+use App\Models\Shares;
 use App\Models\User;
 use App\Models\UserRoles;
 use App\Models\Withdrawals;
@@ -158,6 +159,7 @@ class MembersController extends Controller
     {
         $member = User::findOrFail($user);
         $savings = Savings::where('user_id', $user)->get();
+        $shares = Shares::where('user_id', $user)->get();
         $withdrawals = Withdrawals::where('user_id', $user)->get();
         $loan_requests = LoanRequest::where('user_id', $user)
             ->select('loan_requests.*')
@@ -178,7 +180,15 @@ class MembersController extends Controller
             ->select('loan_payments.*')
             ->orderBy('loan_payments.created_at', 'desc')
             ->get();
-        return view('staff.members.show', ['member' => $member, 'savings' => $savings, 'withdrawals' => $withdrawals, 'loan_requests' => $loan_requests, 'loan_payments' => $loan_payments, 'next_of_kins' => $next_of_kins]);
+        return view('staff.members.show', [
+            'member' => $member,
+            'savings' => $savings,
+            'withdrawals' => $withdrawals,
+            'loan_requests' => $loan_requests,
+            'loan_payments' => $loan_payments,
+            'next_of_kins' => $next_of_kins,
+            'shares' => $shares
+        ]);
     }
 
     /**

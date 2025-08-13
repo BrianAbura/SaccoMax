@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Expenses;
+use App\Models\Incomes;
 use App\Models\LoanPayment;
 use App\Models\LoanRequest;
 use App\Models\NextOfKin;
 use App\Models\Savings;
+use App\Models\Shares;
 use App\Models\User;
 use App\Models\UserRoles;
 use App\Models\Withdrawals;
@@ -67,7 +70,20 @@ class UserController extends Controller
         $charges = Withdrawals::sum('charges');
         $loan_requests = LoanRequest::where('status', 'Approved')->sum('amount');
         $loan_payments = LoanPayment::sum('amount');
-        return view('staff.home', ['total_members' => $members, 'total_savings' => $savings, 'total_withdrawals' => $withdrawals + $charges, 'loan_requests' => $loan_requests, 'loan_payments' => $loan_payments]);
+        $incomes = Incomes::sum('amount');
+        $expenses = Expenses::sum('amount');
+        $shares = Shares::selectRaw('SUM(share_number) as total_number_of_shares, SUM(share_number * share_amount) as total_share_value')
+            ->first();
+        return view('staff.home', [
+            'total_members' => $members,
+            'total_savings' => $savings,
+            'total_withdrawals' => $withdrawals + $charges,
+            'loan_requests' => $loan_requests,
+            'loan_payments' => $loan_payments,
+            'incomes' => $incomes,
+            'expenses' => $expenses,
+            'shares' => $shares
+        ]);
     }
 
     public function member_home()
@@ -82,6 +98,9 @@ class UserController extends Controller
         $loan_payments = LoanPayment::whereHas('loanRequest', function ($query) {
             $query->where('user_id', Auth::user()->id);
         })->sum('amount');
+        $shares = Shares::where('user_id', Auth::user()->id)
+            ->selectRaw('SUM(share_number) as total_number_of_shares, SUM(share_number * share_amount) as total_share_value')
+            ->first();
         $guarantor_requests = DB::table('loan_request_guarantors')
             ->join('loan_requests', 'loan_request_guarantors.loan_request_id', '=', 'loan_requests.id')
             ->join('users', 'loan_requests.user_id', '=', 'users.id')
@@ -114,7 +133,14 @@ class UserController extends Controller
                     ]
                 ];
             });
-        return view('member.home', ['total_savings' => $savings, 'total_withdrawals' => $withdrawals + $charges, 'total_loan_requests' => $loan_requests, 'total_loan_payments' => $loan_payments, 'guarantor_requests' => $guarantor_requests]);
+        return view('member.home', [
+            'total_savings' => $savings,
+            'total_withdrawals' => $withdrawals + $charges,
+            'total_loan_requests' => $loan_requests,
+            'total_loan_payments' => $loan_payments,
+            'total_shares' => $shares,
+            'guarantor_requests' => $guarantor_requests,
+        ]);
     }
 
     public function staff_account_profile()

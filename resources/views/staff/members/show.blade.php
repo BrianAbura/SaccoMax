@@ -251,6 +251,10 @@
                                             data-bs-toggle="pill" href="#pills-loan_payments" role="tab"
                                             aria-controls="pills-loan_payments" aria-selected="false">Loan Payments </a>
                                     </li>
+                                    <li class="nav-item"><a class="nav-link" id="pills-shares-tab" data-bs-toggle="pill"
+                                            href="#pills-shares" role="tab" aria-controls="pills-shares"
+                                            aria-selected="false">Shares </a>
+                                    </li>
                                     <li class="nav-item"><a class="nav-link" id="pills-next_of_kin-tab"
                                             data-bs-toggle="pill" href="#pills-next_of_kin" role="tab"
                                             aria-controls="pills-next_of_kin" aria-selected="false">Next of Kin </a>
@@ -578,6 +582,79 @@
                                         </div>
                                     </div>
                                     {{-- End Loan Payment Panel --}}
+                                    {{-- Start Shares Panel --}}
+                                    <div class="tab-pane fade" id="pills-shares" role="tabpanel"
+                                        aria-labelledby="pills-shares-tab">
+                                        <div class="card-body">
+                                            <div class="table-responsive custom-scrollbar">
+                                                <table class="display basic-1">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>#</th>
+                                                            <th class="text-center">Number of Shares</th>
+                                                            <th>Share Price</th>
+                                                            <th>Shareholding Value</th>
+                                                            <th>Payment Date</th>
+                                                            <th class="text-center">Proof of Payment</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach ($shares as $share)
+                                                            @php
+                                                                $cnt = $loop->iteration;
+                                                            @endphp
+                                                            <tr>
+                                                                <td>{{ $cnt }}</td>
+                                                                <td class="text-center">
+                                                                    {{ number_format($share->share_number) }}</td>
+                                                                <td class="text-primary">UGX
+                                                                    {{ number_format($share->share_amount) }}</td>
+                                                                <td class="text-success">UGX
+                                                                    {{ number_format($share->share_number * $share->share_amount) }}
+                                                                </td>
+                                                                <td> {{ date('d-m-Y', strtotime($share->payment_date)) }}
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    @if (!empty($share->receipt))
+                                                                        <a href="#" class="open-modal"
+                                                                            data-bs-toggle="modal"
+                                                                            data-bs-target="#imageModal3"
+                                                                            data-image="{{ asset($share->receipt) }}">
+                                                                            <img class="b-r-10"
+                                                                                src="{{ asset($share->receipt) }}"
+                                                                                width="60px">
+                                                                        </a>
+                                                                    @else
+                                                                        -
+                                                                    @endif
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                        <!-- Bootstrap Modal (Single Modal for All Images) -->
+                                                        <div class="modal fade" id="imageModal3" tabindex="-1"
+                                                            aria-labelledby="imageModalLabel3" aria-hidden="true">
+                                                            <div class="modal-dialog modal-dialog-centered">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title">Attachment Preview</h5>
+                                                                        <button type="button" class="btn-close"
+                                                                            data-bs-dismiss="modal"
+                                                                            aria-label="Close"></button>
+                                                                    </div>
+                                                                    <div class="modal-body text-center">
+                                                                        <img id="modalImage3" src=""
+                                                                            class="img-fluid b-r-10">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- Bootstrap Modal (Single Modal for All Images) -->
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {{-- End shares Panel --}}
                                     {{-- start Next of Kin panel --}}
                                     <div class="tab-pane fade" id="pills-next_of_kin" role="tabpanel"
                                         aria-labelledby="pills-next_of_kin-tab">
