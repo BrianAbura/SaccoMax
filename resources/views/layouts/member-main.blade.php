@@ -98,14 +98,14 @@
                         <li class="profile-nav onhover-dropdown">
 
                             <div class="media profile-media">
-                                <div class="media-body d-xxl-block d-none box-col-none">
+                                <div class="">
                                     <span class="txt-primary"><i class="fa fa-users"></i> Member
                                         Portal</span>
                                 </div>
                             </div>
                             @if (!empty(array_diff($roles, [2])))
                                 <ul class="profile-dropdown onhover-show-div">
-                                    <li><a href="{{ route('staff.home') }}" class="txt-info f-w-300"><i
+                                    <li><a href="{{ route('staff.home') }}" class="text-success f-w-500"><i
                                                 class="fa fa-shield"></i><span>
                                                 Admin
                                                 Portal</span></a>

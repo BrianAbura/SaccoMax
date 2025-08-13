@@ -144,6 +144,7 @@ class UserController extends Controller
         $member->password = Hash::make($request->password);
         $member->save();
 
+        logAudit('Member Changed Password', 'users', $member->id, [], []);
 
         return back()->with('success', 'Password changed successfully.');
     }
@@ -197,6 +198,32 @@ class UserController extends Controller
         Auth::logout();
         return redirect()->route('login')->with('success', 'Session Terminated');
     }
+
+    public function edit_member_profile(Request $request)
+    {
+        $member = User::findOrFail(Auth::user()->id);
+        $old_member = $member->toArray();
+
+        $query_email = User::where('email', $request->email_address)->first();
+        if ($query_email && $query_email->id != $member->id) {
+            return redirect()->back()->with('edit_error', 'The Email Address is already registered to another member.');
+        }
+
+        $query_phone = User::where('phone_number', $request->phone_number)->first();
+        if ($query_phone && $query_phone->id != $member->id) {
+            return redirect()->back()->with('edit_error', 'The Phone Number is already registered to another member.');
+        }
+
+        $member->email = strip_tags($request->email_address);
+        $member->phone_number = strip_tags($request->phone_number);
+        $member->physical_address = strip_tags($request->physical_address);
+        $member->save();
+
+        logAudit('Member Edited Profile', 'users', $member->id, $old_member, $member->toArray());
+
+        return back()->with('edit_success', 'Profile updated successfully.');
+    }
+
 
     public function create()
     {

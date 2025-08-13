@@ -104,11 +104,16 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="ttl-info text-start">
-                                            <h6 class="mb-2"><i class="fa fa-gears"></i>   Actions</h6>
+                                            <h6 class="mb-2 txt-info"><i class="fa fa-gears"></i>   Actions</h6>
                                             <ul class="d-flex list-unstyled gap-2">
                                                 <li>
+                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#editProfile"
+                                                        class="txt-danger f-w-500">Edit Profile</a>
+                                                </li>|
+                                                <li>
                                                     <a href="#" data-bs-toggle="modal"
-                                                        data-bs-target="#changePassword">Change Password</a>
+                                                        data-bs-target="#changePassword" class="txt-success f-w-500">Change
+                                                        Password</a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -116,6 +121,84 @@
                                 </div>
                             </div>
                         </div>
+                        {{-- Edit Profile start --}}
+                        <div class="modal fade" id="editProfile" tabindex="-1" role="dialog"
+                            aria-labelledby="exampleModalCenter1" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    {{-- Alerts for the home page --}}
+                                    @if (session('edit_success'))
+                                        <div class="alert alert-light-success alert-dismissible fade show mx-auto mt-2"
+                                            role="alert">
+                                            <p class="txt-info"> {{ session('edit_success') }}</p>
+                                            <button class="btn-close" type="button" data-bs-dismiss="alert"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <script>
+                                            document.addEventListener('DOMContentLoaded', function() {
+                                                var editProfileModal = new bootstrap.Modal(document.getElementById('editProfile'));
+                                                editProfileModal.show();
+                                            });
+                                        </script>
+                                    @endif
+                                    @if (session('edit_error'))
+                                        <div class="alert alert-light-secondary alert-dismissible fade show mx-auto mt-2"
+                                            role="alert">
+                                            <p class="txt-info"> {{ session('edit_error') }}</p>
+                                            <button class="btn-close" type="button" data-bs-dismiss="alert"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <script>
+                                            document.addEventListener('DOMContentLoaded', function() {
+                                                var editProfileModal = new bootstrap.Modal(document.getElementById('editProfile'));
+                                                editProfileModal.show();
+                                            });
+                                        </script>
+                                    @endif
+                                    {{-- Alerts for the home page --}}
+                                    <div class="modal-body">
+                                        <form class="theme-form" method="POST"
+                                            action="{{ route('edit_member_profile') }}">
+                                            @csrf
+                                            <div class="form-group">
+                                                <label class="col-form-label">Email</label>
+                                                <div class="form-input position-relative">
+                                                    <input class="form-control txt-info" type="email"
+                                                        name="email_address" required=""
+                                                        placeholder="Enter your email" value="{{ $member->email }}"
+                                                        autocomplete="off">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group mt-2">
+                                                <label class="col-form-label">Phone number</label>
+                                                <div class="form-input position-relative">
+                                                    <input class="form-control txt-info" type="text"
+                                                        name="phone_number" required=""
+                                                        placeholder="Enter your phone number"
+                                                        value="{{ $member->phone_number }}" autocomplete="off">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group mt-2">
+                                                <label class="col-form-label">Physical Address</label>
+                                                <div class="form-input position-relative">
+                                                    <textarea class="form-control txt-info" type="text" name="physical_address" required=""
+                                                        placeholder="Enter your physical address" autocomplete="off">{{ $member->physical_address }}</textarea>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group mt-4">
+                                                <button class="btn btn-primary btn-md btn-block w-100"
+                                                    type="submit">Update
+                                                    Profile</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {{-- Edit Profile end --}}
                         {{-- Change Password start --}}
                         <div class="modal fade" id="changePassword" tabindex="-1" role="dialog"
                             aria-labelledby="exampleModalCenter1" aria-hidden="true">

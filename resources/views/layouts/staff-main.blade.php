@@ -47,12 +47,6 @@
     </style>
     <!-- Select2 CSS -->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/select2.min.css') }}">
-    <style>
-        /* Ensure the dropdown is visible */
-        .select2-container {
-            width: 100% !important;
-        }
-    </style>
 </head>
 
 <body>
@@ -107,7 +101,7 @@
                     <ul class="nav-menus">
                         <li class="profile-nav onhover-dropdown">
                             <div class="media profile-media">
-                                <div class="media-body">
+                                <div class="">
                                     <span class="txt-primary"><i class="fa fa-shield"></i> Admin Portal</span>
                                 </div>
                             </div>
@@ -303,22 +297,23 @@
     </div>
     <!-- latest jquery-->
 
-    <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
-    <script>
-        $(document).ready(function() {
-            console.log("Initializing Select2...");
-            console.log($.fn.select2); // Debugging: Check if Select2 is loaded
+    <script src="{{ asset('assets/js/jquery.min.js') }}">
+        < /link> <
+        script >
+            $(document).ready(function() {
+                console.log("Initializing Select2...");
+                console.log($.fn.select2); // Debugging: Check if Select2 is loaded
 
-            if ($.fn.select2) {
-                $('#example-select').select2({
-                    placeholder: "Choose options...",
-                    allowClear: true
-                });
-                console.log("Select2 initialized successfully!");
-            } else {
-                console.error("Select2 is not loaded!");
-            }
-        });
+                if ($.fn.select2) {
+                    $('#example-select').select2({
+                        placeholder: "Choose options...",
+                        allowClear: true
+                    });
+                    console.log("Select2 initialized successfully!");
+                } else {
+                    console.error("Select2 is not loaded!");
+                }
+            });
     </script>
     <!-- Bootstrap js-->
     <script src="{{ asset('assets/js/bootstrap/bootstrap.bundle.min.js') }}"></script>
@@ -385,6 +380,69 @@
         });
     </script>
     @stack('scripts')
+</body>
+
+</html>
+
+});
+});
+});
+</script>
+@stack('scripts')
+</body>
+
+</html>
+
+}
+}, 5000);
+});
+</script>
+<script>
+    $('.commaAmount').keyup(function(event) {
+        if (event.which >= 37 && event.which <= 40) return;
+        $(this).val(function(index, value) {
+            return value
+                .replace(/\D/g, "")
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        });
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll(".open-modal").forEach(item => {
+            item.addEventListener("click", function() {
+                let imageUrl = this.getAttribute("data-image");
+                document.getElementById("modalImage").setAttribute("src", imageUrl);
+                document.getElementById("modalImage2").setAttribute("src", imageUrl);
+            });
+        });
+    });
+</script>
+@stack('scripts')
+</body>
+
+</html>
+
+
+</html>
+
+.replace(/\D/g, "")
+.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+});
+});
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll(".open-modal").forEach(item => {
+            item.addEventListener("click", function() {
+                let imageUrl = this.getAttribute("data-image");
+                document.getElementById("modalImage").setAttribute("src", imageUrl);
+                document.getElementById("modalImage2").setAttribute("src", imageUrl);
+            });
+        });
+    });
+</script>
+@stack('scripts')
 </body>
 
 </html>

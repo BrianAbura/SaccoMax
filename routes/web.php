@@ -34,6 +34,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/member/home', [UserController::class, 'member_home'])->name('member.home');
     Route::get('/member/account-profile', [UserController::class, 'member_account_profile'])->name('member.account_profile');
     Route::post('change-password', [UserController::class, 'change_password'])->name('change_password');
+    Route::post('edit-member-profile', [UserController::class, 'edit_member_profile'])->name('edit_member_profile');
 
     // Content Relevant to the Member portal
     Route::get('/member/savings', [MemberPortalController::class, 'savings'])->name('member.savings');
