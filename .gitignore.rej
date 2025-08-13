@@ -1,0 +1,7 @@
+diff a/.gitignore b/.gitignore	(rejected hunks)
+@@ -50,3 +50,5 @@ public/savings_receipts/Savings_5_1746526036_rtgs.png
+ public/savings_receipts/Savings_5_1746526671_rtgs.png
+ public/savings_receipts/Savings_5_1746526718_rtgs.png
+ public/savings_receipts/Savings_2_1747032133_rtgs.png
++public/annual_fees/AnnualFee_5_1754371708_download.png
++public/annual_fees/AnnualFee_Updated5_1754384860_Flag_of_Tanzania.svg.png

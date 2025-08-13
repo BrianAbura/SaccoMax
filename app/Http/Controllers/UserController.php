@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AnnualFee;
 use App\Models\Expenses;
 use App\Models\Incomes;
 use App\Models\LoanPayment;
 use App\Models\LoanRequest;
+use App\Models\MembershipFee;
 use App\Models\NextOfKin;
 use App\Models\Savings;
 use App\Models\Shares;
@@ -72,8 +74,9 @@ class UserController extends Controller
         $loan_payments = LoanPayment::sum('amount');
         $incomes = Incomes::sum('amount');
         $expenses = Expenses::sum('amount');
-        $shares = Shares::selectRaw('SUM(share_number) as total_number_of_shares, SUM(share_number * share_amount) as total_share_value')
-            ->first();
+        $shares = Shares::selectRaw('SUM(share_number) as total_number_of_shares, SUM(share_number * share_amount) as total_share_value')->first();
+        $membership_fees = MembershipFee::sum('amount');
+        $annual_fees = AnnualFee::sum('amount');
         return view('staff.home', [
             'total_members' => $members,
             'total_savings' => $savings,
@@ -82,7 +85,9 @@ class UserController extends Controller
             'loan_payments' => $loan_payments,
             'incomes' => $incomes,
             'expenses' => $expenses,
-            'shares' => $shares
+            'shares' => $shares,
+            'membership_fees' => $membership_fees,
+            'annual_fees' => $annual_fees
         ]);
     }
 
@@ -94,6 +99,10 @@ class UserController extends Controller
             ->sum('amount');
         $charges = Withdrawals::where('user_id', Auth::user()->id)
             ->sum('charges');
+        $membership_fees = MembershipFee::where('user_id', Auth::user()->id)
+            ->sum('amount');
+        $annual_fees = AnnualFee::where('user_id', Auth::user()->id)
+            ->sum('amount');
         $loan_requests = LoanRequest::where('user_id', Auth::user()->id)->where('status', 'Approved')->sum('amount');
         $loan_payments = LoanPayment::whereHas('loanRequest', function ($query) {
             $query->where('user_id', Auth::user()->id);
@@ -140,6 +149,8 @@ class UserController extends Controller
             'total_loan_payments' => $loan_payments,
             'total_shares' => $shares,
             'guarantor_requests' => $guarantor_requests,
+            'membership_fees' => $membership_fees,
+            'annual_fees' => $annual_fees,
         ]);
     }
 

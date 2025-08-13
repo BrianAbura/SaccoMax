@@ -209,9 +209,11 @@
                                     </svg>
                                     <span>Transactions</span></a>
                                 <ul class="sidebar-submenu">
+                                    <li><a href="{{ route('fees-membership.index') }}">Membership Fees</a></li>
+                                    <li><a href="{{ route('annual-fees.index') }}">Annual Fees</a></li>
+                                    <li><a href="{{ route('shares.index') }}">Shares</a></li>
                                     <li><a href="{{ route('savings.index') }}">Savings</a></li>
                                     <li><a href="{{ route('withdrawals.index') }}">Withdrawals</a></li>
-                                    <li><a href="{{ route('shares.index') }}">Shares</a></li>
                                 </ul>
                             </li>
 
@@ -397,4 +399,5 @@
     </script>
     @stack('scripts')
 </body>
+
 </html>

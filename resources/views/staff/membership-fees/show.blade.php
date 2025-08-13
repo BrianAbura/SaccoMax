@@ -1,4 +1,3 @@
-@php use App\Models\User; @endphp
 @extends('layouts/staff-main')
 @section('title', 'UPP SACCO')
 @section('page-body')
@@ -7,17 +6,18 @@
             <div class="page-title">
                 <div class="row">
                     <div class="col-6">
-                        <h4>Incomes</h4>
+                        <h4>Membership Fees</h4>
                     </div>
                     <div class="col-6">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="index.html">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                        class="bi bi-graph-up-arrow" viewBox="0 0 16 16">
-                                        <path fill-rule="evenodd"
-                                            d="M0 0h1v15h15v1H0zm10 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4.9l-3.613 4.417a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61L13.445 4H10.5a.5.5 0 0 1-.5-.5" />
+                                        class="bi bi-cash-stack" viewBox="0 0 16 16">
+                                        <path d="M1 3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1zm7 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4" />
+                                        <path
+                                            d="M0 5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V7a2 2 0 0 1-2-2z" />
                                     </svg></a></li>
-                            <li class="breadcrumb-item">Incomes </li>
+                            <li class="breadcrumb-item">Membership Fees </li>
                         </ol>
                     </div>
                 </div>
@@ -29,6 +29,15 @@
                 <div class="col-sm-12">
 
                     <div class="card">
+                        <div class="card-header">
+                            <h5 class="m-b-0 text-primary">
+                                <strong>{{ $member->first_name . ' ' . $member->last_name }} -
+                                    {{ $member->membership_number }}</strong>
+
+                                <a href="{{ route('fees-membership.index') }}"><i
+                                        class="fa fa-reply d-flex justify-content-end h6"></i></a>
+                            </h5>
+                        </div>
 
                         <div class="d-flex justify-content-end align-items-center">
                             {{-- Alerts for the home page --}}
@@ -49,81 +58,49 @@
                                 </div>
                             @endif
                             {{-- Alerts for the home page --}}
-
-                            <a href="{{ route('incomes.create') }}" class="btn btn-primary m-3"><i class="icon-plus"></i>
-                                New Income</a>
                         </div>
 
                         <div class="card-body">
                             <div class="table-responsive custom-scrollbar">
-                                <table class="display basic-1">
+                                <table class="display basic-1" id="basic-1">
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Source</th>
-                                            <th>Source Id</th>
-                                            <th>Category</th>
-                                            <th>Amount</th>
-                                            <th>Description</th>
-                                            <th>Date Received</th>
-                                            <th>Attachment</th>
-                                            <th>Added By</th>
+                                            <th>Membership Fee</th>
+                                            <th>Payment Date</th>
+                                            <th class="text-center">Proof of Payment</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($incomes as $income)
+                                        @foreach ($membershipfee as $membershipfee)
                                             @php
                                                 $cnt = $loop->iteration;
                                             @endphp
                                             <tr>
                                                 <td>{{ $cnt }}</td>
-                                                <td>{{ $income->source_type }}</td>
-                                                <td>
-                                                    @if ($income->source_id == '')
-                                                        --
-                                                    @else
-                                                        {{ $income->source_id }}
-                                                    @endif
-                                                </td>
-                                                <td>{{ $income->category->name }}</td>
-                                                <td class="text-primary">UGX {{ number_format($income->amount) }}</td>
-                                                <td>{{ $income->description }}</td>
-                                                <td> {{ date('d-m-Y', strtotime($income->date_received)) }} </td>
-                                                <td>
-                                                    @if (!empty($income->attachment))
+                                                <td class="text-primary">UGX {{ number_format($membershipfee->amount) }}</td>
+                                                <td> {{ date('d-m-Y', strtotime($membershipfee->payment_date)) }} </td>
+                                                <td class="text-center">
+                                                    @if (!empty($membershipfee->receipt))
                                                         <a href="#" class="open-modal" data-bs-toggle="modal"
                                                             data-bs-target="#imageModal"
-                                                            data-image="{{ asset($income->attachment) }}">
-                                                            <img class="b-r-10" src="{{ asset($income->attachment) }}"
+                                                            data-image="{{ asset($membershipfee->receipt) }}">
+                                                            <img class="b-r-10" src="{{ asset($membershipfee->receipt) }}"
                                                                 width="60px">
                                                         </a>
                                                     @else
                                                         -
-                                                        {{-- <i class="icofont icofont-close-squared-alt h4"
-                                                            title="No file attached"></i> --}}
-                                                    @endif
-                                                </td>
-                                                <td class="text-success">
-                                                    @if (filter_var($income->added_by, FILTER_VALIDATE_INT))
-                                                        @php
-                                                            $user = User::find($income->added_by);
-                                                        @endphp
-                                                        {{ $user->first_name . ' ' . $user->last_name }}
-                                                    @else
-                                                        {{ $income->added_by }}
                                                     @endif
                                                 </td>
                                                 <td>
-                                                    @if ($income->source_type == 'Manual')
-                                                        <ul class="action">
-                                                            <li class="edit"> <a
-                                                                    href="{{ route('incomes.edit', $income->id) }}"><i
-                                                                        class="icon-pencil-alt"></i></a></li>
-                                                            <li class="delete"><a href="#"><i class="icon-trash"></i></a>
+                                                    <ul class="action">
+                                                        <li class="edit"> <a
+                                                                href="{{ route('fees-membership.edit', $membershipfee->id) }}"><i
+                                                                    class="icon-pencil-alt"></i></a></li>
+                                                        <li class="delete"><a href="#"><i class="icon-trash"></i></a>
                                                         </li>
                                                     </ul>
-                                                    @endif
                                                 </td>
                                             </tr>
                                         @endforeach

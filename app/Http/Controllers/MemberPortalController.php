@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AnnualFee;
 use App\Models\LoanHistory;
 use App\Models\LoanPayment;
 use App\Models\Savings;
@@ -11,6 +12,7 @@ use App\Models\LoanRequest;
 use App\Models\User;
 use App\Models\Withdrawals;
 use App\Models\Guarantor;
+use App\Models\MembershipFee;
 use App\Models\Shares;
 use App\Notifications\GuarantorActionNotice;
 use App\Notifications\GuarantorRequestNotice;
@@ -41,6 +43,22 @@ class MemberPortalController extends Controller
             ->orderby('created_at', 'desc')
             ->get();
         return view('member.shares', compact('shares'));
+    }
+
+    public function membership_fee()
+    {
+        $membership_fee = MembershipFee::where('user_id', Auth::user()->id)
+            ->orderby('created_at', 'desc')
+            ->get();
+        return view('member.membership-fee', compact('membership_fee'));
+    }
+
+    public function annual_fees()
+    {
+        $annual_fees = AnnualFee::where('user_id', Auth::user()->id)
+            ->orderby('created_at', 'desc')
+            ->get();
+        return view('member.annual-fees', compact('annual_fees'));
     }
 
     private function recordLoanHistory($loanRequestId, $transactionType, $comment = null)

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AnnualFeeController;
 use App\Http\Controllers\LoanPaymentsController;
 use App\Http\Controllers\LoanProductController;
 use App\Http\Controllers\LoansController;
@@ -15,6 +16,7 @@ use App\Http\Controllers\AuditLogController;
 use App\Http\Controllers\ExpensesController;
 use App\Http\Controllers\IncomesController;
 use App\Http\Controllers\IncoomesController;
+use App\Http\Controllers\MembershipFeeController;
 use App\Http\Controllers\SharesController;
 use Illuminate\Support\Facades\Route;
 
@@ -44,7 +46,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/member/savings', [MemberPortalController::class, 'savings'])->name('member.savings');
     Route::get('/member/withdrawals', [MemberPortalController::class, 'withdrawals'])->name('member.withdrawals');
     Route::get('/member/shares', [MemberPortalController::class, 'shares'])->name('member.shares');
-
+    Route::get('/member/annual-fees', [MemberPortalController::class, 'annual_fees'])->name('member.annual-fees');
+    Route::get('/member/membership-fee', [MemberPortalController::class, 'membership_fee'])->name('member.membership-fee');
 
     // Loan Management Routes
     Route::get('/member/loan-requests', [MemberPortalController::class, 'loan_requests'])->name('member.loan_requests');
@@ -90,4 +93,6 @@ Route::middleware('auth')->group(function () {
     Route::resource('staff/incomes', IncomesController::class);
     Route::resource('staff/expenses', ExpensesController::class);
     Route::resource('staff/shares', SharesController::class);
+    Route::resource('staff/fees-membership', MembershipFeeController::class);
+    Route::resource('staff/annual-fees', AnnualFeeController::class);
 });
