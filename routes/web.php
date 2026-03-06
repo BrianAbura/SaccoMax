@@ -13,11 +13,14 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\WithdrawalsController;
 use App\Http\Controllers\NextOfKinController;
 use App\Http\Controllers\AuditLogController;
+use App\Http\Controllers\BalanceSheetManualController;
 use App\Http\Controllers\ExpensesController;
 use App\Http\Controllers\IncomesController;
 use App\Http\Controllers\IncoomesController;
 use App\Http\Controllers\MembershipFeeController;
+use App\Http\Controllers\RolesController;
 use App\Http\Controllers\SharesController;
+use App\Http\Controllers\SMSMessagesController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [UserController::class, 'index'])->name('login');
@@ -68,8 +71,11 @@ Route::middleware('auth')->group(function () {
     Route::resource('staff/savings', SavingsController::class);
     Route::resource('staff/withdrawals', WithdrawalsController::class);
     Route::resource('staff/messages', MessageController::class);
+    Route::resource('staff/sms-messages', SMSMessagesController::class);
     Route::resource('staff/next-of-kin', NextOfKinController::class);
     Route::resource('staff/audit-logs', AuditLogController::class);
+    Route::resource('staff/roles', RolesController::class);
+
 
     // Staff Loan Action
     Route::get('/staff/loan-requests', [LoansController::class, 'loan_requests'])->name('staff.loan-requests');
@@ -95,4 +101,11 @@ Route::middleware('auth')->group(function () {
     Route::resource('staff/shares', SharesController::class);
     Route::resource('staff/fees-membership', MembershipFeeController::class);
     Route::resource('staff/annual-fees', AnnualFeeController::class);
+
+    // Balance sheet related routes
+    Route::get('staff/balance-sheet-sub-categories', [BalanceSheetManualController::class, 'balance_sheet_sub_categories'])->name('staff.balance-sheet-sub-categories');
+    Route::post('staff/balance-sheet-sub-categories', [BalanceSheetManualController::class, 'store_sub_category'])->name('staff.balance-sheet-sub-categories.store');
+    Route::put('staff/balance-sheet-sub-categories/{id}', [BalanceSheetManualController::class, 'update_sub_category'])->name('staff.balance-sheet-sub-categories.update');
+    Route::resource('staff/balance-sheet-entires', BalanceSheetManualController::class);
+    Route::get('staff/balance-sheet/{period}', [BalanceSheetManualController::class, 'balance_sheet'])->name('staff.balance-sheet');
 });

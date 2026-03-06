@@ -4,15 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class UserRoles extends Model
+class SMSMessages extends Model
 {
-    public function role()
-    {
-        return $this->belongsTo(Roles::class, 'roles_id');
-    }
+    protected $table = 'sms_messages';
 
     public function member()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function addedBy()
+    {
+        return $this->belongsTo(User::class, 'added_by');
     }
 }

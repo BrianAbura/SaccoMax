@@ -28,6 +28,13 @@ return [
         'key' => env('RESEND_KEY'),
     ],
 
+    'sms' => [
+        'client_id' => env('SMS_CLIENT_ID'),
+        'api_username' => env('SMS_API_USERNAME'),
+        'api_key' => env('SMS_API_KEY'),
+        'url' => env('SMS_URL'),
+    ],
+
     'slack' => [
         'notifications' => [
             'bot_user_oauth_token' => env('SLACK_BOT_USER_OAUTH_TOKEN'),

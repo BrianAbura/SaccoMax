@@ -5,8 +5,10 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="SaccoMax – Smart, secure SACCO management software to digitize operations, manage savings & loans, and empower your cooperative’s future.">
-    <meta name="keywords" content="SACCO software, cooperative management system, SaccoMax, digital SACCO platform, savings and credit software, cooperative solutions, SACCO ERP, loan management system">
+    <meta name="description"
+        content="SaccoMax – Smart, secure SACCO management software to digitize operations, manage savings & loans, and empower your cooperative’s future.">
+    <meta name="keywords"
+        content="SACCO software, cooperative management system, SaccoMax, digital SACCO platform, savings and credit software, cooperative solutions, SACCO ERP, loan management system">
 
     <link rel="icon" href="{{ asset('assets/images/logo/saccomax_icon.png') }}" type="image/x-icon">
     <link rel="shortcut icon" href="{{ asset('assets/images/logo/saccomax_icon.png') }}" type="image/x-icon">
@@ -256,6 +258,8 @@
                                     <span>Reports</span></a>
                                 <ul class="sidebar-submenu">
                                     <li><a href="{{ route('staff.members.report', 'all') }}">Members</a></li>
+                                    <li><a href="{{ route('staff.balance-sheet', 'to_date') }}">Balance Sheet</a></li>
+
                                 </ul>
                             </li>
 
@@ -265,16 +269,18 @@
                                     <h6>System Settings</h6>
                                 </div>
                             </li>
-                            <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav"
-                                    href="{{ route('messages.index') }}">
+
+                            <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="#">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                        fill="currentColor" class="bi bi-envelope-at" viewBox="0 0 16 16">
+                                        fill="currentColor" class="bi bi-tools" viewBox="0 0 16 16">
                                         <path
-                                            d="M2 2a2 2 0 0 0-2 2v8.01A2 2 0 0 0 2 14h5.5a.5.5 0 0 0 0-1H2a1 1 0 0 1-.966-.741l5.64-3.471L8 9.583l7-4.2V8.5a.5.5 0 0 0 1 0V4a2 2 0 0 0-2-2zm3.708 6.208L1 11.105V5.383zM1 4.217V4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v.217l-7 4.2z" />
-                                        <path
-                                            d="M14.247 14.269c1.01 0 1.587-.857 1.587-2.025v-.21C15.834 10.43 14.64 9 12.52 9h-.035C10.42 9 9 10.36 9 12.432v.214C9 14.82 10.438 16 12.358 16h.044c.594 0 1.018-.074 1.237-.175v-.73c-.245.11-.673.18-1.18.18h-.044c-1.334 0-2.571-.788-2.571-2.655v-.157c0-1.657 1.058-2.724 2.64-2.724h.04c1.535 0 2.484 1.05 2.484 2.326v.118c0 .975-.324 1.39-.639 1.39-.232 0-.41-.148-.41-.42v-2.19h-.906v.569h-.03c-.084-.298-.368-.63-.954-.63-.778 0-1.259.555-1.259 1.4v.528c0 .892.49 1.434 1.26 1.434.471 0 .896-.227 1.014-.643h.043c.118.42.617.648 1.12.648m-2.453-1.588v-.227c0-.546.227-.791.573-.791.297 0 .572.192.572.708v.367c0 .573-.253.744-.564.744-.354 0-.581-.215-.581-.8Z" />
+                                            d="M1 0 0 1l2.2 3.081a1 1 0 0 0 .815.419h.07a1 1 0 0 1 .708.293l2.675 2.675-2.617 2.654A3.003 3.003 0 0 0 0 13a3 3 0 1 0 5.878-.851l2.654-2.617.968.968-.305.914a1 1 0 0 0 .242 1.023l3.27 3.27a.997.997 0 0 0 1.414 0l1.586-1.586a.997.997 0 0 0 0-1.414l-3.27-3.27a1 1 0 0 0-1.023-.242L10.5 9.5l-.96-.96 2.68-2.643A3.005 3.005 0 0 0 16 3q0-.405-.102-.777l-2.14 2.141L12 4l-.364-1.757L13.777.102a3 3 0 0 0-3.675 3.68L7.462 6.46 4.793 3.793a1 1 0 0 1-.293-.707v-.071a1 1 0 0 0-.419-.814zm9.646 10.646a.5.5 0 0 1 .708 0l2.914 2.915a.5.5 0 0 1-.707.707l-2.915-2.914a.5.5 0 0 1 0-.708M3 11l.471.242.529.026.287.445.445.287.026.529L5 13l-.242.471-.026.529-.445.287-.287.445-.529.026L3 15l-.471-.242L2 14.732l-.287-.445L1.268 14l-.026-.529L1 13l.242-.471.026-.529.445-.287.287-.445.529-.026z" />
                                     </svg>
-                                    <span>Messages </span></a>
+                                    <span>Notifications</span></a>
+                                <ul class="sidebar-submenu">
+                                    <li><a href="{{ route('messages.index') }}">Email Notifications</a></li>
+                                    <li><a href="{{ route('sms-messages.index') }}">SMS Notifications</a></li>
+                                </ul>
                             </li>
 
                             <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="#">
@@ -286,11 +292,13 @@
                                     <span>Configurations</span></a>
                                 <ul class="sidebar-submenu">
                                     <li><a href="{{ route('loan-product.index') }}">Loan Products</a></li>
-                                    <li><a href="#">Role Management</a></li>
+                                    <li><a href="{{ route('roles.index') }}">Role Management</a></li>
                                     <li><a href="{{ route('audit-logs.index') }}">Audit Logs</a></li>
+                                    <li><a href="{{ route('staff.balance-sheet-sub-categories') }}">Sub Categories</a>
+                                    </li>
+
                                 </ul>
                             </li>
-
 
                         </ul>
                         <div class="right-arrow" id="right-arrow"><i data-feather="arrow-right"></i></div>
